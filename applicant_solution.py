@@ -68,7 +68,7 @@ def deconvolve_same(target, kernel, ridge):
     return np.fft.ifft(estimate_fft)[:n]
 
 
-def your_canceller(tx_n, rx):
+def my_canceller(tx_n, rx):
     fit_tx_prediction = helpers["fit_tx_prediction"]
     score_filter = helpers["score_filter"]
 
@@ -84,17 +84,17 @@ baseline_reds, baseline_avg = helpers["score"](
     rx, baseline(tx_n, rx, helpers["fit_tx_prediction"]), label="baseline"
 )
 
-print("=== Your Solution ===")
-yours_reds, yours_avg = helpers["score"](rx, your_canceller(tx_n, rx), label="yours")
+print("=== Solution ===")
+reds, avg = helpers["score"](rx, my_canceller(tx_n, rx), label="yours")
 
 results = {
     "baseline": {
         "per_channel_db": baseline_reds,
         "average_db": baseline_avg,
     },
-    "yours": {
-        "per_channel_db": yours_reds,
-        "average_db": yours_avg,
+    "my": {
+        "per_channel_db": reds,
+        "average_db": avg,
     },
 }
 
